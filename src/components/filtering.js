@@ -1,7 +1,12 @@
-import {createComparison, defaultRules} from "../lib/compare.js";
+import {createComparison, defaultRules, rules} from "../lib/compare.js";
 
 // @todo: #4.3 — настроить компаратор
-const compare = createComparison(defaultRules);
+const compare = createComparison(defaultRules,
+    [
+        rules.caseInsensitiveStringIncludes(),
+        rules.arrayAsRange()
+    ]
+);
 
 export function initFiltering(elements, indexes) {
     // @todo: #4.1 — заполнить выпадающие списки опциями
@@ -29,6 +34,14 @@ export function initFiltering(elements, indexes) {
 
         // @todo: #4.5 — отфильтровать данные используя компаратор
         const target = {};
+
+        if (state.date) {
+            target.date = state.date;
+        }
+
+        if (state.customer) {
+            target.customer = state.customer;
+        }
 
         if (state.seller && state.seller !== 'all') {
             target.seller = state.seller;
