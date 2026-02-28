@@ -1,6 +1,7 @@
 import {createComparison, defaultRules} from "../lib/compare.js";
 
 // @todo: #4.3 — настроить компаратор
+const compare = createComparison(defaultRules);
 
 export function initFiltering(elements, indexes) {
     // @todo: #4.1 — заполнить выпадающие списки опциями
@@ -12,8 +13,6 @@ export function initFiltering(elements, indexes) {
             return option;
         }))
     })
-
-    const compare = createComparison(defaultRules);
 
     return (data, state, action) => {
         // @todo: #4.2 — обработать очистку поля
@@ -29,6 +28,20 @@ export function initFiltering(elements, indexes) {
         }
 
         // @todo: #4.5 — отфильтровать данные используя компаратор
-        return data.filter(row => compare(row,state));
+        const target = {};
+
+        if (state.seller && state.seller !== 'all') {
+            target.seller = state.seller;
+        }
+
+        const totalFrom = state.totalFrom ? Number(state.totalFrom) : undefined;
+        const totalTo = state.totalTo ? Number(state.totalTo) : undefined;
+
+        if (totalFrom !== undefined || totalTo !== undefined) {
+            target.total = [totalFrom, totalTo];
+        }
+
+
+        return data.filter(row => compare(row,target));
     }
 }
