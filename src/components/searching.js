@@ -22,6 +22,8 @@ export function initSearching(searchField) {
             return data;
         }
 
+        
+
         const target = { search: searchValue };
 
         return data.filter(item => compare(item, target));
