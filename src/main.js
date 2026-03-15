@@ -57,7 +57,7 @@ const sampleTable = initTable({
 
 // @todo: инициализация
 
-const applySearching = initSearching (sampleTable.search.elements.search);
+const applySearching = initSearching ('search');
 
 const {applyFiltering, updateIndexes} = initFiltering (sampleTable.filter.elements, {
     searchBySeller: indexes.sellers
